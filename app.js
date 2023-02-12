@@ -161,7 +161,7 @@ coinWrapper.addEventListener(`click`,()=>{
 chamber.addEventListener(`click`,()=>{
     // if conditions met, you may spin
     if(!coinTurning){
-        if (casinoSoundtrack.paused ){
+        if (!casinoSoundtrack.paused ){
         casinoSoundtrack.pause();
         }
     chamberBox.classList.remove(`animation-trigger`);
@@ -200,8 +200,9 @@ chamber.addEventListener(`click`,()=>{
 });
 
 shootTxt.addEventListener(`click`,()=>{
-    if(!chamberTurning ){
-    
+    let once = false;
+    if(!chamberTurning && !once){
+        once=  true;
         chamber.classList.remove(`hidden`);
         chamberBox.classList.add(`animation-trigger`);
       
@@ -214,8 +215,8 @@ shootTxt.addEventListener(`click`,()=>{
         console.log(playerCash)
         updateBalance(); 
         updateDay();
-    roulettePlaying = false;
-
+        roulettePlaying = false;
+        console.log('sadad')
     }
 });
 
