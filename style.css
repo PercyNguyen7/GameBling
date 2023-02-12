@@ -339,16 +339,16 @@ h2{
 
 .balance-txt{
     font-family: 'Courier New', Courier, monospace;
-    font-size: 2rem;
+    font-size: 3.5rem;
     position: fixed;
-    top: 3rem;
+    top: 4rem;
     left:1rem;
     mix-blend-mode: difference;
     color:white;
 }
 .day-txt{
   font-family: 'Courier New', Courier, monospace;
-  font-size: 2rem;
+  font-size: 3.5rem;
   position: fixed;
   top: 1rem;
   left:1rem;
