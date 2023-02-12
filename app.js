@@ -12,6 +12,10 @@ const shootTxt = document.querySelector(`.shoot-txt`)
 const glassBG = document.querySelector(`.broken-glass`);
 const playerBetInput = document.querySelector(`.coinBetAmount`);
 
+const cockRevSFX = new Audio(`assets/sounds/cocking2.mp3`);
+const shootSFX = new Audio(`assets/sounds/shoot.mp3`)
+
+let proDayMark = 10;
 let day = 0;
 let playerCash = 100;
 let previousBet =0;
@@ -78,7 +82,7 @@ coinWrapper.addEventListener(`click`,()=>{
             alert(`You can't bet more than your current balance`)
         }
         // after a month, you must bet more than your previous bet
-        else if ( day >31 && playerBet <= previousBet){
+        else if ( day > proDayMark && playerBet <= previousBet){
             alert(`You're now regarded as a professional gambler. And it may only be fitting for professional gambler to bet more than your previous bet ($ ${previousBet})`);
         }
 
@@ -137,19 +141,21 @@ chamber.addEventListener(`click`,()=>{
 
 shootTxt.addEventListener(`click`,()=>{
     if(!chamberTurning ){
+    
         chamber.classList.remove(`hidden`);
         chamberBox.classList.add(`animation-trigger`);
       
 
         shootTxt.innerHTML =`safe`;
         shootTxt.classList.remove(`active`);
-       
     
         calculateRouletteResult();
+      
+        console.log(playerCash)
         updateBalance(); 
         updateDay();
     roulettePlaying = false;
-        
+
     }
 });
 
@@ -159,12 +165,13 @@ function randomizeRoulette(){
     console.log(rouletteNumber);
     
     if (rouletteNumber === 0){
-        rouletteResult =`lost`;
+        rouletteResult=`lost`;
         chamber.setAttribute(`data-number`,1);
+   
     }
     else if(rouletteNumber>0){
-        rouletteResult='won';
-
+        rouletteResult=`won`;
+  
         if (rouletteNumber === 1){
         chamber.setAttribute(`data-number`,2);
         }
@@ -187,14 +194,19 @@ function randomizeRoulette(){
 function calculateRouletteResult(){
 
     if (rouletteResult === `lost`){
-        playerCash -= 1000;
+        // playerCash -= 1000;
+       
+        shootSFX.play();
+        glassBG.classList.add('active');
+       
     }
-    else if(rouletteResult==='won'){
+    else if(rouletteResult === `won`){
         playerCash += 1000;
-        glassBG.classList.add('active')
-
+        cockRevSFX.currentTime =0;
+        cockRevSFX.play();
+        // shootSFX.play();
+        
     }
-    console.log(playerCash)
 }
 
 function randomizeResult(){
