@@ -297,7 +297,7 @@ h2{
   }
     #roulette-game{
       display: none;
-      display:flex;
+      /* display:flex; */
     background-color: rgb(15, 15, 15);
     overflow: hidden;
     flex-direction: column;
@@ -310,6 +310,9 @@ h2{
       display: flex;
      
 
+  }
+  .cred{
+    margin: 3rem 0;
   }
 .animation-flip {
     animation: flipping 1s linear infinite;
