@@ -32,7 +32,8 @@ let playerCash = 100;
 let previousBet =0;
 let coinTurning = false;
 let chamberTurning = false;
-let once;
+let once = false;
+let onceBroke = false;
 let guessChosen = false;
 
 let sideChosen = false;
@@ -352,11 +353,12 @@ function calculateResult(){
         playerCash -= coinOutput;
         coinResultTxt.innerHTML = `You lost $${coinOutput}`;
 
-        if(playerCash <=0){
+        if(playerCash <=0 && !onceBroke){
             setTimeout(()=>{ alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
             rouletteGame.classList.add('active');
             rouletteGame.scrollIntoView();},3000)
             casinoSoundtrack.pause();
+            onceBroke = true;
         }
     }
 
@@ -400,7 +402,7 @@ function getRandomInt(max) {
   function updateMusic(){
     if (casinoSoundtrack.paused ){
     casinoSoundtrack.loop = true;
-    casinoSoundtrack.volume=0.3;
+    casinoSoundtrack.volume=0.1;
     casinoSoundtrack.play();
     }
 }

@@ -311,8 +311,14 @@ h2{
      
 
   }
+  .title{
+    color: white;
+  }
   .cred{
-    margin: 3rem 0;
+    margin-top: 5rem;
+    position: relative;
+    color: white;
+    /* left:5rem; */
   }
 .animation-flip {
     animation: flipping 1s linear infinite;
