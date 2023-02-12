@@ -1,10 +1,15 @@
 const coin = document.querySelector(`.thecoin`);
 const chamber = document.querySelector(`.thechamber`);
+const chamberBox = document.querySelector(`.thechamber-box`)
 const headsBtn = document.querySelector(`.heads-button`);
 const tailsBtn = document.querySelector(`.tails-button`);
 const coinWrapper =document.querySelector(`.coin-wrapper`);
+
 const balanceTxt = document.querySelector(`.balance-txt`);
 const dayTxt = document.querySelector(`.day-txt`);
+const shootTxt = document.querySelector(`.shoot-txt`)
+
+const glassBG = document.querySelector(`.broken-glass`);
 const playerBetInput = document.querySelector(`.coinBetAmount`);
 
 let day = 0;
@@ -21,6 +26,7 @@ let coinResult;
 let playerBet;
 
 let rouletteResult;
+let roulettePlaying = false;
 
 playerBetInput.addEventListener('input', function () {
 
@@ -33,7 +39,7 @@ updateBalance();
 updateDay();
 
 headsBtn.addEventListener(`click`,()=>{
-    if (!coinTurning ){
+    if (!coinTurning && !roulettePlaying){
     tailsBtn.classList.remove(`activated`);
     headsBtn.classList.toggle(`activated`);
         if (headsBtn.classList.contains('activated')){
@@ -47,7 +53,7 @@ headsBtn.addEventListener(`click`,()=>{
 });
 
 tailsBtn.addEventListener(`click`,()=>{
-    if (!coinTurning ){
+    if (!coinTurning && !roulettePlaying){
     headsBtn.classList.remove(`activated`);
     tailsBtn.classList.toggle(`activated`);
         if (tailsBtn.classList.contains('activated')){
@@ -62,11 +68,11 @@ tailsBtn.addEventListener(`click`,()=>{
 
 coinWrapper.addEventListener(`click`,()=>{
 
-    if (playerBetInput.value === ``){
+    if (playerBetInput.value === `` && !roulettePlaying){
         alert(`Place your bet now!`);
     }
     // if conditions met, you may spin
-    if (coinGuess != `none` && playerBetInput.value != `` ){
+    if (coinGuess != `none` && playerBetInput.value != `` && !roulettePlaying){
        
         if (playerBet > playerCash){
             alert(`You can't bet more than your current balance`)
@@ -101,8 +107,9 @@ coinWrapper.addEventListener(`click`,()=>{
 
 chamber.addEventListener(`click`,()=>{
     // if conditions met, you may spin
-    
-       
+    if(!coinTurning){
+    chamberBox.classList.remove(`animation-trigger`);
+       roulettePlaying = true;
      
         // after a month, you must bet more than your previous bet
    
@@ -116,42 +123,78 @@ chamber.addEventListener(`click`,()=>{
         // else remove flip and pick a side
         else if (chamber.classList.contains('animation-spin')){
             chamber.classList.remove(`animation-spin`);
+            shootTxt.innerHTML =`shoot`;
+            shootTxt.classList.add(`active`);
             chamberTurning = false;
+            chamber.classList.add(`hidden`);
+       
+            resetRouletteAnimations();
             randomizeRoulette();
 
-
-            // randomizeResult();
-            // calculateResult();
-            // updateBalance(); 
-            // updateDay();
-            // reset_animation();
         }
-    
+    }
 });
+
+shootTxt.addEventListener(`click`,()=>{
+    if(!chamberTurning ){
+        chamber.classList.remove(`hidden`);
+        chamberBox.classList.add(`animation-trigger`);
+      
+
+        shootTxt.innerHTML =`safe`;
+        shootTxt.classList.remove(`active`);
+       
+    
+        calculateRouletteResult();
+        updateBalance(); 
+        updateDay();
+    roulettePlaying = false;
+        
+    }
+});
+
 function randomizeRoulette(){
 
     let rouletteNumber = getRandomInt(6);
-    if (rouletteNumber === 1){
-        
+    console.log(rouletteNumber);
+    
+    if (rouletteNumber === 0){
+        rouletteResult =`lost`;
+        chamber.setAttribute(`data-number`,1);
     }
-    else if(rouletteNumber>1){
-        if (rouletteNumber === 2){
-            
+    else if(rouletteNumber>0){
+        rouletteResult='won';
+
+        if (rouletteNumber === 1){
+        chamber.setAttribute(`data-number`,2);
+        }
+        else if (rouletteNumber === 2){
+         chamber.setAttribute(`data-number`,3);   
         }
         else if (rouletteNumber === 3){
-            
-        }
-        else if (rouletteNumber === 4){
-            
+        chamber.setAttribute(`data-number`,4);    
         } 
-        else if (rouletteNumber === 5){
-            
+        else if (rouletteNumber === 4){
+        chamber.setAttribute(`data-number`,5);    
         }
-        else if (rouletteNumber === 6){
-            
+        else if (rouletteNumber === 5){
+        chamber.setAttribute(`data-number`,6);    
         }
     }
 
+}
+
+function calculateRouletteResult(){
+
+    if (rouletteResult === `lost`){
+        playerCash -= 1000;
+    }
+    else if(rouletteResult==='won'){
+        playerCash += 1000;
+        glassBG.classList.add('active')
+
+    }
+    console.log(playerCash)
 }
 
 function randomizeResult(){
@@ -242,7 +285,18 @@ function reset_animation() {
     coinResultTxt.style.animation = 'none';
     coinResultTxt.offsetHeight; /* trigger reflow */
     coinResultTxt.style.animation = null; 
-  }
+}
+
+function resetRouletteAnimations(){
+    // const shootTxt = document.querySelector(`.shoot-txt`);
+    shootTxt.style.animation = 'none';
+    shootTxt.offsetHeight; /* trigger reflow */
+    shootTxt.style.animation = null; 
+
+    chamber.style.animation = 'none';
+    chamber.offsetHeight; /* trigger reflow */
+    chamber.style.animation = null; 
+}
 
 
 function updateBalance(){

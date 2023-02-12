@@ -109,29 +109,72 @@ h2{
     margin: 2rem;
     user-select: none;
   }
+  .thechamber-box{
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
   .thechamber{
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     background: url(assets/images/roulette.png) center center / cover no-repeat ;
     cursor: pointer;
     /* animation: spinning 0.5s linear infinite; */
   }
-  .animation-spin{
-    animation: spinning 0.5s linear infinite;
+  .thechamber.hidden{
+    background: url(assets/images/roulette-empty.png) center center / cover no-repeat ;
   }
-
+  .animation-spin{
+    animation: spinning 0.25s linear infinite;
+  }
+ 
   @keyframes spinning{
     0%{
       transform: rotateZ(0deg);
-    
     }
-
     100%{
       transform: rotateZ(360deg);
     
     }
   }
 
+  .thechamber[data-number="1"]{
+    transform: rotateZ(0deg);
+  
+  }
+  .thechamber[data-number="2"]{
+    transform: rotateZ(60deg);
+  
+  }
+  .thechamber[data-number="3"]{
+    transform: rotateZ(120deg);
+       
+  }
+  .thechamber[data-number="4"]{
+    transform: rotateZ(180deg);
+       
+  }
+  .thechamber[data-number="5"]{
+    transform: rotateZ(240deg);
+       
+  }
+  .thechamber[data-number="6"]{
+    transform: rotateZ(300deg);
+  }
+  .shoot-txt{
+    background-color: rgb(196, 196, 196);
+    color: black;
+    font-size: 2rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
+  .shoot-txt.active{
+    background-color: rgb(221, 35, 35);
+  }
+  .shoot-txt.active:hover{
+    transform:scale(1.2);
+  }
 
   .heads-button.activated,
   .tails-button.activated{
@@ -251,6 +294,24 @@ h2{
     position: fixed;
     top: 3rem;
     left:1rem;
+    mix-blend-mode: difference;
+    color:white;
+}
+
+.broken-glass{
+  display: none;
+  position: fixed;
+  background: url(assets/images/glass.png) center center / cover no-repeat ;
+  top:-10%;
+  left: -7%;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  transform: scale(1.1) rotateZ(10deg);
+}
+.broken-glass.active{
+  display: block;
+  animation:broken 0.3s  1;
 }
 .day-txt{
   font-family: 'Courier New', Courier, monospace;
@@ -258,6 +319,8 @@ h2{
   position: fixed;
   top: 1rem;
   left:1rem;
+  mix-blend-mode: difference;
+  color:white;
 }
 .coin-result-txt{
   font-family: 'Courier New', Courier, monospace;
@@ -265,6 +328,13 @@ h2{
   margin-top: 2rem;
   animation: zoom 0.4s ease-in 1;
 }
+
+
+.animation-trigger{
+  animation: trigger 1s  1;
+}
+
+
 @keyframes flipping {
     0% {
         -webkit-transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
@@ -289,6 +359,17 @@ h2{
                 transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
       } 
 }
+
+@keyframes broken{
+  0%{
+    transform: scale(1) rotateZ(0deg);
+    /* opacity: 0; */
+  }
+  100%{
+    transform: scale(1.1) rotateZ(10deg);
+    opacity: 1;
+  }
+}
 @keyframes zoom{
   0%{
     transform: scale(1.4);
@@ -299,7 +380,18 @@ h2{
     opacity: 1;
   }
 }
+@keyframes trigger{
+  0%{
+    transform: scale(1);
 
+  }
+  30%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
 @keyframes flip-head {
     0% {
       -webkit-transform: rotateY(0);
