@@ -17,6 +17,7 @@ const playerBetInput = document.querySelector(`.coinBetAmount`);
 const pickSFX = new Audio(`assets/sounds/pick.mp3`);
 const coinSpinSFX = new Audio(`assets/sounds/coin-spin.mp3`);
 
+const casinoSoundtrack = new Audio(`assets/sounds/casinoBG.mp3`);
 const cockRevSFX = new Audio(`assets/sounds/cocking2.mp3`);
 const shootSFX = new Audio(`assets/sounds/shoot.mp3`)
 const chamberSpinSFX = new Audio(`assets/sounds/spin.mp3`);
@@ -43,9 +44,10 @@ let rouletteResult;
 let roulettePlaying = false;
 
 playerBetInput.addEventListener('input', function () {
-
+    // allInBtn.classList.remove(`active`);
 	// As a number
 	playerBet = parseFloat(playerBetInput.value);
+    console.log(playerBet)
 	// console.log(typeof playerBet, playerBet);
 });
 // greeting();
@@ -60,16 +62,23 @@ playerBetInput.addEventListener('input', function () {
 updateBalance();
 updateDay();
 
-allInBtn.addEventListener(`click`,()=>{
-    if (!coinTurning && !roulettePlaying){
-        if (allInBtn.classList.contains(``))
-        playerCash = playerBetInput.value;
-    }
-});
+// allInBtn.addEventListener(`click`,()=>{
+//     if (!coinTurning && !roulettePlaying){
+       
+//         // if (allInBtn.classList.contains(`activated`)){
+
+//         // }
+//         playerBetInput.value = ``;
+//         playerBet = parseFloat(playerBetInput.value);
+//         allInBtn.classList.toggle(`active`);
+//         playerBet = playerCash;
+//     }
+// });
 
 headsBtn.addEventListener(`click`,()=>{
-    if (!coinTurning && !roulettePlaying){
    
+    if (!coinTurning && !roulettePlaying){
+   updateMusic();
     tailsBtn.classList.remove(`activated`);
     headsBtn.classList.toggle(`activated`);
         if (headsBtn.classList.contains('activated')){
@@ -86,7 +95,7 @@ headsBtn.addEventListener(`click`,()=>{
 
 tailsBtn.addEventListener(`click`,()=>{
     if (!coinTurning && !roulettePlaying){
-     
+     updateMusic();
     headsBtn.classList.remove(`activated`);
     tailsBtn.classList.toggle(`activated`);
         if (tailsBtn.classList.contains('activated')){
@@ -132,6 +141,8 @@ coinWrapper.addEventListener(`click`,()=>{
             coin.classList.remove(`animation-flip`);
             coinTurning = false;
             randomizeResult();
+
+
             calculateResult();
             updateBalance(); 
             updateDay();
@@ -143,11 +154,16 @@ coinWrapper.addEventListener(`click`,()=>{
             // coinGuess = `none`;
         }
     }
+
+ 
 });
 
 chamber.addEventListener(`click`,()=>{
     // if conditions met, you may spin
     if(!coinTurning){
+        if (casinoSoundtrack.paused ){
+        casinoSoundtrack.pause();
+        }
     chamberBox.classList.remove(`animation-trigger`);
        roulettePlaying = true;
         
@@ -334,13 +350,15 @@ function calculateResult(){
 
         playerCash -= coinOutput;
         coinResultTxt.innerHTML = `You lost $${coinOutput}`;
-    }
-    if(playerCash <=0){
-        alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
-        rouletteGame.classList.add('active');
-        rouletteGame.scrollIntoView();
 
+        if(playerCash <=0){
+            setTimeout(()=>{ alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
+            rouletteGame.classList.add('active');
+            rouletteGame.scrollIntoView();},3000)
+            casinoSoundtrack.pause();
+        }
     }
+
      
 }
 
@@ -378,3 +396,10 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+  function updateMusic(){
+    if (casinoSoundtrack.paused ){
+    casinoSoundtrack.loop = true;
+    casinoSoundtrack.volume=0.3;
+    casinoSoundtrack.play();
+    }
+}
