@@ -112,7 +112,7 @@ tailsBtn.addEventListener(`click`,()=>{
 });
 
 coinWrapper.addEventListener(`click`,()=>{
-
+    
     if (playerBetInput.value === `` && !roulettePlaying){
         alert(`Place your bet now!`);
     }
@@ -124,7 +124,13 @@ coinWrapper.addEventListener(`click`,()=>{
         }
         // after a month, you must bet more than your previous bet
         else if ( day > proDayMark && playerBet <= previousBet){
-            alert(`You're now regarded as a professional gambler. And it may only be fitting for professional gambler to bet more than your previous bet ($ ${previousBet})`);
+            let newGameTxt =``;
+            // if (!onceBroke) {
+            //     onceBroke = true;
+
+            // }
+
+            alert(`You're now regarded as a professional gambler. And it may only be fitting for professional gambler to bet more than your previous bet ($ ${previousBet}).`);
         }
 
         // if coin isnt fliipping, then flip
@@ -353,15 +359,15 @@ function calculateResult(){
         playerCash -= coinOutput;
         coinResultTxt.innerHTML = `You lost $${coinOutput}`;
 
-        if(playerCash <=0 && !onceBroke){
-            setTimeout(()=>{ alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
-            rouletteGame.classList.add('active');
-            rouletteGame.scrollIntoView();},3000)
-            casinoSoundtrack.pause();
-            onceBroke = true;
-        }
     }
-
+// if lost coin, 
+    if(playerCash <=0 && !onceBroke || playerCash < previousBet && day >= proDayMark){
+    setTimeout(()=>{ alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
+    rouletteGame.classList.add('active');
+    rouletteGame.scrollIntoView();},1000);
+    casinoSoundtrack.pause();
+    onceBroke = true;
+}
      
 }
 
