@@ -6,7 +6,7 @@
 }
 h2{
   text-transform: uppercase;
-  font-size: 3.5rem;
+  font-size: 4rem;
 }
  h3{
     font-size: 2rem;
@@ -26,7 +26,10 @@ h2{
     height: 25rem;
     display: flex;
     background: none;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    border-bottom: #000 5px solid;
+    
+    box-shadow: 0 25px 2px -2px rgb(19, 19, 19);
     /* border: 1px solid red;   */
   }
   .choices-wrapper{
@@ -64,6 +67,8 @@ h2{
     /* border: 1px dashed red; */
     cursor: pointer;
     user-select: none;
+  
+    /* box-shadow: 50px 50px 10px 10px black; */
   }
   .thecoin[data-side="heads"]{
     transform: rotateY(0deg);
@@ -166,6 +171,7 @@ h2{
     transform: rotateZ(300deg);
   }
   .shoot-txt{
+    text-transform: uppercase;
     background-color: rgb(196, 196, 196);
     color: black;
     font-size: 2rem;
@@ -174,6 +180,7 @@ h2{
   }
   .shoot-txt.active{
     background-color: rgb(221, 35, 35);
+    cursor: pointer;
   }
   .shoot-txt.active:hover{
     transform:scale(1.2);
@@ -186,9 +193,9 @@ h2{
     border:5px solid #be8337;
   }
   /* THE PSUEDO CLASS CONTROLS THE FLIP ON MOUSEOVER AND MOUSEOUT */
-  /* .thecoin:hover{
+  .thecoin:hover{
     transform: rotateY(180deg);
-  } */
+  }
   
 
 
@@ -277,6 +284,13 @@ h2{
 .currencyinput input {
   border: 0;
 }
+#instruction{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #be8337;
+}
   #rps-game{
    
     background-color: red;
@@ -285,12 +299,28 @@ h2{
     background-color: rgb(210, 210, 210);
   }
     #roulette-game{
-  
+      display: none;
     background-color: rgb(15, 15, 15);
     overflow: hidden;
   }
+  #roulette-game.active{
+    display:block;
+  }
 .animation-flip {
     animation: flipping 1s linear infinite;
+}
+.all-in-btn{
+  font-size: 2rem;
+  background-color: white;
+  padding:0 1rem;
+  border: 5px solid black;
+  cursor: pointer;
+}
+
+.all-in-btn.active{
+  background-color: #000;
+    color: #be8337;
+    border:5px solid #be8337;
 }
 
 .balance-txt{
@@ -302,7 +332,18 @@ h2{
     mix-blend-mode: difference;
     color:white;
 }
-
+.day-txt{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  position: fixed;
+  top: 1rem;
+  left:1rem;
+  mix-blend-mode: difference;
+  color:white;
+}
+.balance-txt,.day-txt{
+  z-index: 9999;
+}
 .broken-glass{
   position:fixed;
   background: url(assets/images/glass2.png) center center / cover no-repeat ;
@@ -321,19 +362,11 @@ h2{
 .broken-glass.active{
   /* opacity: 1; */
   display: block;
-  /* pointer-events:auto; */
+  pointer-events:auto;
 
   animation:broken 0.05s  1;
 }
-.day-txt{
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 2rem;
-  position: fixed;
-  top: 1rem;
-  left:1rem;
-  mix-blend-mode: difference;
-  color:white;
-}
+
 .coin-result-txt{
   font-family: 'Courier New', Courier, monospace;
   font-size: 2rem;

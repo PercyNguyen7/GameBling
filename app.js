@@ -4,6 +4,8 @@ const chamberBox = document.querySelector(`.thechamber-box`)
 const headsBtn = document.querySelector(`.heads-button`);
 const tailsBtn = document.querySelector(`.tails-button`);
 const coinWrapper =document.querySelector(`.coin-wrapper`);
+const allInBtn = document.querySelector(`.all-in-btn`)
+const rouletteGame = document.querySelector(`#roulette-game`)
 
 const balanceTxt = document.querySelector(`.balance-txt`);
 const dayTxt = document.querySelector(`.day-txt`);
@@ -12,13 +14,17 @@ const shootTxt = document.querySelector(`.shoot-txt`)
 const glassBG = document.querySelector(`.broken-glass`);
 const playerBetInput = document.querySelector(`.coinBetAmount`);
 
-const coinSpinSFX = new Audio(`assets/sounds/coin-spin.mp3`)
+const pickSFX = new Audio(`assets/sounds/pick.mp3`);
+const coinSpinSFX = new Audio(`assets/sounds/coin-spin.mp3`);
 
 const cockRevSFX = new Audio(`assets/sounds/cocking2.mp3`);
 const shootSFX = new Audio(`assets/sounds/shoot.mp3`)
 const chamberSpinSFX = new Audio(`assets/sounds/spin.mp3`);
 
 const emptyRevSFX =new Audio(`assets/sounds/empty-chamber.mp3`);
+
+const winSFX =new Audio(`assets/sounds/win.mp3`);
+const loseSFX =new Audio(`assets/sounds/lose.wav`);
 let proDayMark = 10;
 let day = 0;
 let playerCash = 100;
@@ -42,15 +48,33 @@ playerBetInput.addEventListener('input', function () {
 	playerBet = parseFloat(playerBetInput.value);
 	// console.log(typeof playerBet, playerBet);
 });
+// greeting();
+
+// function greeting() {
+//     let person = prompt("Please enter your casino alias", "Blackjack Champ");
+//     if (person != null) {
+//       person = `player`;
+//     }
+// }
 
 updateBalance();
 updateDay();
 
+allInBtn.addEventListener(`click`,()=>{
+    if (!coinTurning && !roulettePlaying){
+        if (allInBtn.classList.contains(``))
+        playerCash = playerBetInput.value;
+    }
+});
+
 headsBtn.addEventListener(`click`,()=>{
     if (!coinTurning && !roulettePlaying){
+   
     tailsBtn.classList.remove(`activated`);
     headsBtn.classList.toggle(`activated`);
         if (headsBtn.classList.contains('activated')){
+            pickSFX.currentTime = 0;
+            pickSFX.play();
             coinGuess = `heads`;
         }
         else{
@@ -62,9 +86,12 @@ headsBtn.addEventListener(`click`,()=>{
 
 tailsBtn.addEventListener(`click`,()=>{
     if (!coinTurning && !roulettePlaying){
+     
     headsBtn.classList.remove(`activated`);
     tailsBtn.classList.toggle(`activated`);
         if (tailsBtn.classList.contains('activated')){
+            pickSFX.currentTime = 0;
+            pickSFX.play();
             coinGuess = `tails`;
         }
         else{
@@ -95,6 +122,9 @@ coinWrapper.addEventListener(`click`,()=>{
             coin.classList.add('animation-flip');
             console.log('run');
             coinTurning = true;
+
+            coinSpinSFX.loop = true;
+            coinSpinSFX.play();
         }
         // else remove flip and pick a side
         else if (coin.classList.contains('animation-flip')){
@@ -106,6 +136,8 @@ coinWrapper.addEventListener(`click`,()=>{
             updateBalance(); 
             updateDay();
             reset_animation();
+
+            coinSpinSFX.pause();
             // headsBtn.classList.remove(`activated`);
             // tailsBtn.classList.remove(`activated`);
             // coinGuess = `none`;
@@ -207,23 +239,20 @@ function calculateRouletteResult(){
 
     if (rouletteResult === `lost`){
         // playerCash -= 1000;
-       
         shootSFX.play();
         glassBG.classList.add('active');
-       
+        setTimeout(()=>{alert(`You spent the last ${day} days gambling away your life...`)},3000);
     }
     else if(rouletteResult === `won`){
         playerCash += 1000;
-      
-        // shootSFX.play();
-        
+        emptyRevSFX.play();
     }
 }
 
 function randomizeResult(){
     let houseCoinInfluence = 0;
     // day 1-20, win probability is 20% 
-    if (day <=20){
+    if (day <=5){
         console.log('influenced');
         if (coinGuess ===`heads`){
             houseCoinInfluence = 20;
@@ -235,7 +264,7 @@ function randomizeResult(){
         }
     }
     // after day 20, win probability becomes 45%
-    else if (day > 20){
+    else if (day > 5){
         if (coinGuess ===`heads`){
             houseCoinInfluence = -5;
         }
@@ -290,15 +319,27 @@ function calculateResult(){
     if (coinResult === `won`){
     coinOutput = playerBet;
     // console.log(playerBet);
+        winSFX.currentTime = 0;
+        winSFX.play();
+
  
     playerCash = playerCash + playerBet;
-    coinResultTxt.innerHTML = `You won $ ${coinOutput}`;
+    coinResultTxt.innerHTML = `You won $${coinOutput}`;
     }
     else if (coinResult === `lost`){
         coinOutput = playerBet;
         // console.log(playerBet);
+        loseSFX.currentTime = 0;
+        loseSFX.play();
+
         playerCash -= coinOutput;
-        coinResultTxt.innerHTML = `You lost $ ${coinOutput}`;
+        coinResultTxt.innerHTML = `You lost $${coinOutput}`;
+    }
+    if(playerCash <=0){
+        alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
+        rouletteGame.classList.add('active');
+        rouletteGame.scrollIntoView();
+
     }
      
 }
