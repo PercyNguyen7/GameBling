@@ -116,15 +116,19 @@ coinWrapper.addEventListener(`click`,()=>{
     if (playerBetInput.value === `` && !roulettePlaying){
         alert(`Place your bet now!`);
     }
+    else if (coinGuess === `none`){
+        console.log('test')
+        alert(`Select heads or tails!`);
+    }
     // if conditions met, you may spin
     if (coinGuess != `none` && playerBetInput.value != `` && !roulettePlaying){
        
         if (playerBet > playerCash){
             alert(`You can't bet more than your current balance`)
         }
+    
         // after a month, you must bet more than your previous bet
         else if ( day > proDayMark && playerBet <= previousBet){
-            let newGameTxt =``;
             // if (!onceBroke) {
             //     onceBroke = true;
 
@@ -132,7 +136,7 @@ coinWrapper.addEventListener(`click`,()=>{
 
             alert(`You're now regarded as a professional gambler. And it may only be fitting for professional gambler to bet more than your previous bet ($ ${previousBet}).`);
         }
-
+      
         // if coin isnt fliipping, then flip
         else if (!coin.classList.contains('animation-flip')){
             coin.classList.add('animation-flip');
