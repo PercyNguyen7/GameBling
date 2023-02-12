@@ -172,6 +172,7 @@ coinWrapper.addEventListener(`click`,()=>{
 chamber.addEventListener(`click`,()=>{
     // if conditions met, you may spin
     if(!coinTurning){
+
         if (!casinoSoundtrack.paused ){
         casinoSoundtrack.pause();
         }
@@ -179,7 +180,9 @@ chamber.addEventListener(`click`,()=>{
        roulettePlaying = true;
         
         // after a month, you must bet more than your previous bet
-   
+   headsBtn.classList.remove(`activated`);
+    tailsBtn.classList.remove(`activated`);
+    coinGuess = `none`;
 
         // if chamber isnt rotating, then rotate
         if (!chamber.classList.contains('animation-spin')){
