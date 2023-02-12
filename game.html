@@ -8,25 +8,34 @@
     <title>Gambler Addiction</title>
 </head>
 <body>
-    <div class="currency">Currency</div>
+    <div class="balance-txt"></div>
+    <div class="day-txt"> </div>
     <section class="intro">
-        <div>Welcome to the game!</div>
+        <!-- <div>Welcome to the game!</div> -->
   
     </section>
 
     <section id="coin-game" class="games">
-      <h1>Coin Game</h1>
+      <h2>HEAD OR TAILS</h2>
+      <h3>x2 or nothing</h3>
+      <div class="coin-bet-wrapper">
+      <div>Bet Amount:</div>
+      <span class="currencyinput">$   <input type="number" placeholder="Bet Amount" min="0" max="1000000" class="coinBetAmount"></span>
+   
+    </div>
       <div class="choices-wrapper"> 
+
+
         <div class="heads-button">Heads</div>
         <div class="tails-button">Tails</div>
-    </div>
-        <div class="maincontainer">
+      </div>
+        <div class="coin-wrapper">
            
             <div class="thecoin">
             
               <div class="thefront">
                 <div>
-                    <h1>Head</h1>
+                    <!-- <h1>Head</h1> -->
             </div>
                 <!-- <p>This is the front of the card. It contains important information. Please see overleaf for more details.</p> -->
             </div>
@@ -34,21 +43,31 @@
       
               <div class="theback">
                 <div>
-                <h1>Tail</h1>
+                <!-- <h1>Tail</h1> -->
                 <!-- <p>Your use of this site is subject to the terms and conditions governing this and all transactions.</p> -->
               <!-- <button>Submit</button></div> -->
                 </div>
             </div>
         </div>
-
+      </div>
+      <div class="coin-result-txt"></div>
     </section>
 
-    <section id="rps-game" class="games">
+    <!-- <section id="rps-game" class="games">
      
-    </section>
+    </section> -->
     
     <section id="roulette-game" class="games">
-     
+      <h2>Russian Roulette</h2>
+      <h3>All IN or NOTHING</h3>
+      <h3>Winner takes 1000$.</h3>
+      <!-- <div class="coin-bet-wrapper"></div> -->
+      <div>Bet Currency: Your Life</div>
+      <div class="chamber-wrapper">
+        <div class="thechamber"></div>
+
+      </div>
+      <!-- <span class="currencyinput">$   <input type="number" placeholder="Bet Amount" min="0" max="1000000" class="rouletteBetAmount"></span> -->
         
     </section>
 

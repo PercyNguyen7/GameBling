@@ -2,10 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
 }
-
- h1{
-    font-size: 2.5rem;
+h2{
+  text-transform: uppercase;
+  font-size: 3.5rem;
+}
+ h3{
+    font-size: 2rem;
  }
 
  #coin-game{
@@ -14,17 +18,36 @@
     justify-content: center;
     align-items: center;
  }
-  .maincontainer{
+  .coin-wrapper{
     width: 25rem;
     height: 25rem;
     display: flex;
-    background: none;  
+    background: none;
+    border-radius: 50%;
+    /* border: 1px solid red;   */
   }
   .choices-wrapper{
     width: 100%;
-    border: 1px solid red;
+    padding: 2rem 0;
+    /* border: 1px solid red; */
   }
-  
+  .coin-bet-wrapper{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.25rem;
+    justify-content: center;
+    align-items: center; 
+    gap:2rem;
+  }
+  .coinBetAmount{
+    font-size: 1.25rem;
+    width: 10rem;
+  }
+  .rouletteBetAmount{
+    font-size: 1.25rem;
+    width: 10rem;
+  }
+ 
   /* THE CARD HOLDS THE FRONT AND BACK FACES */
   .thecoin{
     position: relative;
@@ -32,13 +55,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* border-radius: 50%; */
-
+    border-radius: 50%;
     transform-style: preserve-3d;
     transition: all 0.8s ease;
-    border: 1px dashed red;
+    /* border: 1px dashed red; */
+    cursor: pointer;
+    user-select: none;
   }
-  .thecoin[data-side="head"]{
+  .thecoin[data-side="heads"]{
     transform: rotateY(0deg);
   }
   .thecoin[data-side="tails"]{
@@ -46,10 +70,13 @@
   }
   .choices-wrapper{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap:10rem;
     align-items: center;
   }
-
+.coin-result{
+  font-family: 'Courier New', Courier, monospace;
+}
   #coin-game h1{
     font-family: 'Courier New', Courier, monospace;
   }
@@ -61,12 +88,56 @@
     padding: 0.5rem 1rem ;
     background-color: white;
     border-radius: 5px;
+    border:5px solid #adadad;
+    cursor: pointer;
+    user-select: none;
   }
+  #roulette-game{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+  .chamber-wrapper{
+    display: flex;
+    width: 25rem;
+    height: 25rem;
+    background: none;
+    border: 1px solid white;
+    margin: 2rem;
+    user-select: none;
+  }
+  .thechamber{
+    width: 100%;
+    height: 100%;
+    background: url(assets/images/roulette.png) center center / cover no-repeat ;
+    cursor: pointer;
+    /* animation: spinning 0.5s linear infinite; */
+  }
+  .animation-spin{
+    animation: spinning 0.5s linear infinite;
+  }
+
+  @keyframes spinning{
+    0%{
+      transform: rotateZ(0deg);
+    
+    }
+
+    100%{
+      transform: rotateZ(360deg);
+    
+    }
+  }
+
 
   .heads-button.activated,
   .tails-button.activated{
     background-color: #000;
-    color: #ffcf4b;
+    color: #be8337;
+    border:5px solid #be8337;
   }
   /* THE PSUEDO CLASS CONTROLS THE FLIP ON MOUSEOVER AND MOUSEOUT */
   /* .thecoin:hover{
@@ -88,7 +159,8 @@
     border-radius: 50%;
     backface-visibility: hidden;
     overflow: hidden;
-    background: #d8a825;
+
+    background-color: #be8337;
     color: #000;
   }
 
@@ -105,7 +177,7 @@
     border-radius: 50%;
     backface-visibility: hidden;
     overflow: hidden;
-    background: #d8a825;
+    background: #d9a556;
 
     /* background: #fafafa; */
     color: #333;
@@ -116,11 +188,18 @@
   .theback>div{
     width: 80%;
     height: 80%;
-    background: #ffcf4b;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+  }
+  .thefront>div{
+    background: url(assets/images/coin-heads.png) center center / cover no-repeat ;
+
+  }
+  .theback>div{
+    background: url(assets/images/coin-tails.png) center center / cover no-repeat ;
+
   }
   
   /*This block (starts here) is merely styling for the flip card, and is NOT an essential part of the flip code */
@@ -144,6 +223,14 @@
      width: 100%;
     height: 100vh;
 }
+
+.currencyinput {
+  border: 2px inset #ccc;
+  background-color: white;
+}
+.currencyinput input {
+  border: 0;
+}
   #rps-game{
    
     background-color: red;
@@ -158,36 +245,60 @@
     animation: flipping 1s linear infinite;
 }
 
-.cash-txt{
+.balance-txt{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
     position: fixed;
-    top: 1rem;
-    font-size: 1rem;
+    top: 3rem;
+    left:1rem;
 }
-
+.day-txt{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  position: fixed;
+  top: 1rem;
+  left:1rem;
+}
+.coin-result-txt{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  margin-top: 2rem;
+  animation: zoom 0.4s ease-in 1;
+}
 @keyframes flipping {
     0% {
-        -webkit-transform: rotateY(0deg) rotateX(0deg);
-                transform: rotateY(0deg) rotateX(0deg);
+        -webkit-transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+                transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
                 
       }
       25% {
-        -webkit-transform: rotateY(360deg) rotateX(-10deg);
-                transform: rotateY(360deg) rotateX(-10deg);
+        -webkit-transform: translateX(6%) rotateY(360deg) rotateX(-10deg) rotateZ(50deg);
+                transform: translateX(6%) rotateY(360deg) rotateX(-10deg) rotateZ(50deg);
       }
+      
       50% {
-        -webkit-transform: rotateY(720deg) rotateX(0deg);
-                transform: rotateY(720deg) rotateX(0deg);
+        -webkit-transform: translateX(0) rotateY(720deg) rotateX(0deg) rotateZ(0deg);
+                transform: translateX(0) rotateY(720deg) rotateX(0deg) rotateZ(0deg);
       }
       75% {
-        -webkit-transform: rotateY(360deg) rotateX(10deg);
-                transform: rotateY(360deg) rotateX(10deg);
+        -webkit-transform: translateX(-6%) rotateY(360deg) rotateX(10deg) rotateZ(-50deg);
+                transform: translateX(-6%) rotateY(360deg) rotateX(10deg) rotateZ(-50deg);
       }
       100% {
-        -webkit-transform: rotateY(0deg);
-                transform: translateY(0deg);
+        -webkit-transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+                transform: translateX(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
       } 
 }
-
+@keyframes zoom{
+  0%{
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 @keyframes flip-head {
     0% {
