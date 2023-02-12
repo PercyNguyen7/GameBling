@@ -179,9 +179,9 @@ h2{
     background-color: rgb(221, 35, 35);
     cursor: pointer;
   }
-  .shoot-txt.active:hover{
+  /* .shoot-txt.active:hover{
     transform:scale(1.2);
-  }
+  } */
 
   .heads-button.activated,
   .tails-button.activated{
