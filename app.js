@@ -32,7 +32,7 @@ let playerCash = 100;
 let previousBet =0;
 let coinTurning = false;
 let chamberTurning = false;
-
+let once;
 let guessChosen = false;
 
 let sideChosen = false;
@@ -170,7 +170,7 @@ chamber.addEventListener(`click`,()=>{
         // after a month, you must bet more than your previous bet
    
 
-        // if coin isnt fliipping, then flip
+        // if chamber isnt rotating, then rotate
         if (!chamber.classList.contains('animation-spin')){
             chamber.classList.add('animation-spin');
             
@@ -180,14 +180,14 @@ chamber.addEventListener(`click`,()=>{
             chamberSpinSFX.play();
 
         }
-        // else remove flip and pick a side
+        // else remove animation and pick a chamber
         else if (chamber.classList.contains('animation-spin')){
             chamber.classList.remove(`animation-spin`);
             shootTxt.innerHTML =`shoot`;
             shootTxt.classList.add(`active`);
             chamberTurning = false;
             chamber.classList.add(`hidden`);
-
+            once = true;
             //sfx
             chamberSpinSFX.pause();
             cockRevSFX.currentTime =0;
@@ -200,9 +200,9 @@ chamber.addEventListener(`click`,()=>{
 });
 
 shootTxt.addEventListener(`click`,()=>{
-    let once = false;
-    if(!chamberTurning && !once){
-        once=  true;
+ 
+    if(!chamberTurning && once){
+        once =  false;
         chamber.classList.remove(`hidden`);
         chamberBox.classList.add(`animation-trigger`);
       
@@ -216,7 +216,7 @@ shootTxt.addEventListener(`click`,()=>{
         updateBalance(); 
         updateDay();
         roulettePlaying = false;
-        console.log('sadad')
+        console.log('sadad');
     }
 });
 
