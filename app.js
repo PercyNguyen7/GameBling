@@ -12,9 +12,13 @@ const shootTxt = document.querySelector(`.shoot-txt`)
 const glassBG = document.querySelector(`.broken-glass`);
 const playerBetInput = document.querySelector(`.coinBetAmount`);
 
+const coinSpinSFX = new Audio(`assets/sounds/coin-spin.mp3`)
+
 const cockRevSFX = new Audio(`assets/sounds/cocking2.mp3`);
 const shootSFX = new Audio(`assets/sounds/shoot.mp3`)
+const chamberSpinSFX = new Audio(`assets/sounds/spin.mp3`);
 
+const emptyRevSFX =new Audio(`assets/sounds/empty-chamber.mp3`);
 let proDayMark = 10;
 let day = 0;
 let playerCash = 100;
@@ -114,15 +118,19 @@ chamber.addEventListener(`click`,()=>{
     if(!coinTurning){
     chamberBox.classList.remove(`animation-trigger`);
        roulettePlaying = true;
-     
+        
         // after a month, you must bet more than your previous bet
    
 
         // if coin isnt fliipping, then flip
         if (!chamber.classList.contains('animation-spin')){
             chamber.classList.add('animation-spin');
-     
+            
             chamberTurning = true;
+            chamberSpinSFX.currentTime=0;
+            chamberSpinSFX.loop = true;
+            chamberSpinSFX.play();
+
         }
         // else remove flip and pick a side
         else if (chamber.classList.contains('animation-spin')){
@@ -131,7 +139,11 @@ chamber.addEventListener(`click`,()=>{
             shootTxt.classList.add(`active`);
             chamberTurning = false;
             chamber.classList.add(`hidden`);
-       
+
+            //sfx
+            chamberSpinSFX.pause();
+            cockRevSFX.currentTime =0;
+            cockRevSFX.play();
             resetRouletteAnimations();
             randomizeRoulette();
 
@@ -202,8 +214,7 @@ function calculateRouletteResult(){
     }
     else if(rouletteResult === `won`){
         playerCash += 1000;
-        cockRevSFX.currentTime =0;
-        cockRevSFX.play();
+      
         // shootSFX.play();
         
     }
