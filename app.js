@@ -113,16 +113,16 @@ tailsBtn.addEventListener(`click`,()=>{
 
 coinWrapper.addEventListener(`click`,()=>{
     
-    if (playerBetInput.value === `` && !roulettePlaying){
-        alert(`Place your bet now!`);
-    }
-    else if (coinGuess === `none`){
-        console.log('test')
-        alert(`Select heads or tails!`);
-    }
+ 
     // if conditions met, you may spin
     if (coinGuess != `none` && playerBetInput.value != `` && !roulettePlaying){
-       
+        if (playerBetInput.value === `` && !roulettePlaying){
+            alert(`Place your bet now!`);
+        }
+        else if (coinGuess === `none`){
+            console.log('test')
+            alert(`Select heads or tails!`);
+        }
         if (playerBet > playerCash){
             alert(`You can't bet more than your current balance`)
         }
