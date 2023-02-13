@@ -368,7 +368,7 @@ function calculateResult(){
 
     }
 // if lost coin, 
-    if(playerCash <=0 && !onceBroke || playerCash < previousBet && day >= proDayMark){
+    if(playerCash <=0 && !onceBroke || playerCash < previousBet && day >= proDayMark && !onceBroke){
     setTimeout(()=>{ alert('It seems like you have run out of coin! Why not join our newest game, RUSSIAN ROULETTE?');
     rouletteGame.classList.add('active');
     rouletteGame.scrollIntoView();},1000);
